@@ -1,0 +1,6 @@
+# list of libraries used in this project
+
+pandas
+requests
+matplotlib
+seaborn
