@@ -1,27 +1,40 @@
-# Convert time column to datetime format
-
-df['time'] = pd.to_datetime(df['time'])
-df['time']
+import pandas as pd
 
 
-# Handle missing values appropriately
+def clean_data():
 
-df.isnull().sum()
+    # Load raw dataset
 
+    df = pd.read_csv(
+        r"data/raw/weather_raw.csv"
+    )
 
-# no missing values available 
+    # Convert time column to datetime format
 
-# Standardize column names
+    df['time'] = pd.to_datetime(df['time'])
 
-df.columns = df.columns = (
-    df.columns
-    .str.lower()
-    .str.strip()
-    .str.replace(" ", "_")
-)
+    # Handle missing values
 
-# Remove duplicate records
+    df.dropna(inplace=True)
 
-df.duplicated().sum()
+    # Standardize column names
 
-df.drop_duplicates()
+    df.columns = (
+        df.columns
+        .str.lower()
+        .str.strip()
+        .str.replace(" ", "_")
+    )
+
+    # Remove duplicate records
+
+    df.drop_duplicates(inplace=True)
+
+    # Save cleaned dataset
+
+    df.to_csv(
+        r"data/processed/weather_cleaned.csv",
+        index=False
+    )
+
+    return df
